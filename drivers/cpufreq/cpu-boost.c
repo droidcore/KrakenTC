@@ -27,6 +27,7 @@
 #include <linux/time.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_TOUCHBOOST_CONTROL
 #include <linux/export.h>
@@ -38,6 +39,14 @@ unsigned int touchboost_ms = 40;
 #endif
 
 >>>>>>> 9785fd2... cpu-boost: Update touch boost (input boost) configuration driver to V2
+=======
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+#include <linux/export.h>
+unsigned int input_boost_status = 1;
+unsigned int input_boost_freq = 1344000;
+#endif
+
+>>>>>>> c127efa... cpu-boost: Implement touch boost configuration driver
 struct cpu_sync {
 	struct task_struct *thread;
 	wait_queue_head_t sync_wq;
@@ -68,7 +77,7 @@ module_param(sysctl_thermal_aware_scheduling, uint, 0644);
 static unsigned int sync_threshold;
 module_param(sync_threshold, uint, 0644);
 
-static bool input_boost_enabled;
+bool input_boost_enabled;
 
 static unsigned int input_boost_ms = 40;
 module_param(input_boost_ms, uint, 0644);
@@ -136,6 +145,7 @@ check_enable:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_TOUCHBOOST_CONTROL
 void set_touchboost_parameters(void)
@@ -157,6 +167,16 @@ EXPORT_SYMBOL(get_touchboost_parameters);
 #endif
 
 >>>>>>> 9785fd2... cpu-boost: Update touch boost (input boost) configuration driver to V2
+=======
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+void set_touchboost_frequency(void)
+{
+	per_cpu(sync_info, 0).input_boost_freq = input_boost_freq;
+}
+EXPORT_SYMBOL(set_touchboost_frequency);
+#endif
+
+>>>>>>> c127efa... cpu-boost: Implement touch boost configuration driver
 static int get_input_boost_freq(char *buf, const struct kernel_param *kp)
 {
 	int cnt = 0, cpu;
@@ -426,6 +446,7 @@ static void cpuboost_input_event(struct input_handle *handle,
 	u64 now;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_TOUCHBOOST_CONTROL
 	// if touch boost (input boost) for both clusters is switched off, do nothing
@@ -434,6 +455,14 @@ static void cpuboost_input_event(struct input_handle *handle,
 #endif
 
 >>>>>>> 9785fd2... cpu-boost: Update touch boost (input boost) configuration driver to V2
+=======
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+	// if touch boost (input boost) is switched off, do nothing
+	if (!input_boost_status)
+		return;
+#endif
+
+>>>>>>> c127efa... cpu-boost: Implement touch boost configuration driver
 	if (!input_boost_enabled)
 		return;
 

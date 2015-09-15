@@ -1091,8 +1091,11 @@ config TOUCHBOOST_CONTROL
 	  Boeffla Kernels functionality to control input boost as touch boost
 	  in the Boeffla Config app
 
+<<<<<<< HEAD
 config TOUCHSCREEN_SWEEP2SLEEP
 	bool "Enable kernel support for Sweep2Sleep"
 	default n
 
+=======
+>>>>>>> c127efa... cpu-boost: Implement touch boost configuration driver
 endif
