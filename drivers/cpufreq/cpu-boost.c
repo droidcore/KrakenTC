@@ -26,6 +26,18 @@
 #include <linux/input.h>
 #include <linux/time.h>
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+#include <linux/export.h>
+unsigned int touchboost_status_1 = 1;
+unsigned int touchboost_freq_1 = 1344000;
+unsigned int touchboost_status_2 = 0;
+unsigned int touchboost_freq_2 = 1344000;
+unsigned int touchboost_ms = 40;
+#endif
+
+>>>>>>> 9785fd2... cpu-boost: Update touch boost (input boost) configuration driver to V2
 struct cpu_sync {
 	struct task_struct *thread;
 	wait_queue_head_t sync_wq;
@@ -123,6 +135,28 @@ check_enable:
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+void set_touchboost_parameters(void)
+{
+	per_cpu(sync_info, 0).input_boost_freq = (touchboost_status_1 == 1) ? touchboost_freq_1 : 0;
+	per_cpu(sync_info, 4).input_boost_freq = (touchboost_status_2 == 1) ? touchboost_freq_2 : 0;
+	input_boost_ms = touchboost_ms;
+}
+EXPORT_SYMBOL(set_touchboost_parameters);
+
+void get_touchboost_parameters(void)
+{
+	touchboost_status_1 = (per_cpu(sync_info, 0).input_boost_freq == 0) ? 0 : 1;
+	touchboost_status_2 = (per_cpu(sync_info, 4).input_boost_freq == 0) ? 0 : 1;
+	touchboost_ms = input_boost_ms;
+}
+EXPORT_SYMBOL(get_touchboost_parameters);
+
+#endif
+
+>>>>>>> 9785fd2... cpu-boost: Update touch boost (input boost) configuration driver to V2
 static int get_input_boost_freq(char *buf, const struct kernel_param *kp)
 {
 	int cnt = 0, cpu;
@@ -391,6 +425,15 @@ static void cpuboost_input_event(struct input_handle *handle,
 {
 	u64 now;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+	// if touch boost (input boost) for both clusters is switched off, do nothing
+	if ((!touchboost_status_1) && (!touchboost_status_2))
+		return;
+#endif
+
+>>>>>>> 9785fd2... cpu-boost: Update touch boost (input boost) configuration driver to V2
 	if (!input_boost_enabled)
 		return;
 
