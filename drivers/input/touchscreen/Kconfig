@@ -1091,14 +1091,4 @@ config TOUCHBOOST_CONTROL
 	  Boeffla Kernels functionality to control input boost as touch boost
 	  in the Boeffla Config app
 
-<<<<<<< HEAD
-=======
-config TOUCHSCREEN_SWEEP2SLEEP
-	bool "Enable kernel support for Sweep2Sleep"
-	default n
-
-config BOEFFLA_POWERKEY_HELPER
-	bool "Enable Boeffla Powerkey helper"
-	default n
->>>>>>> 133d1f3... drivers/input: Add Boeffla powerkey helper driver
 endif
